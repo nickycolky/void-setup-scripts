@@ -3,16 +3,6 @@ function post-install
     echo "------------------------------------------------"
     echo ""
 
-    # 0. Initial System Setup (Installs xtools-minimal, git, and sets default shell)
-    # This must run first to provide 'xi' for subsequent steps.
-    echo "➡️ Running initial-setup (installing core tools and setting default shell)..."
-    initial-setup
-    if test $status -ne 0
-        echo "❌ initial-setup failed. Aborting further setup."
-        return 1
-    end
-    echo ""
-
     # 1. Core System Configuration & Privilege Escalation (now 'xi' should be available)
     echo "➡️ Running doas-setup (installing and configuring doas)..."
     doas-setup
