@@ -18,7 +18,7 @@ function boot-setup
     doas sed -i 's#/boot/efi#/boot#g' /etc/fstab
 
     echo "📦 Installing Limine..."
-    xi -S limine
+    xi -Sy limine
 
     echo "🗑 Cleaning Limine directory except BOOTX64.EFI..."
     cd /usr/share/limine
@@ -49,7 +49,28 @@ EOF
 " > /dev/null
 
     echo "⚙️ Creating EFI boot entry with efibootmgr..."
-    doas efibootmgr --create --disk /dev/nvme0n1 --part 1 --loader '\\EFI\\BOOT\\BOOTX64.EFI' --label 'Limine' --unicode
+    set -l esp_mountpoint "/boot/efi"
+
+    # Find the device of the currently mounted ESP
+    set -l esp_device (findmnt -no SOURCE -M "$esp_mountpoint")
+
+if test -z "$esp_device"
+    echo "❌ Could not find the EFI System Partition mounted at $esp_mountpoint."
+    return 1
+end
+
+# Extract disk and partition number
+set -l esp_disk (echo "$esp_device" | string match -r '^(/dev/[^0-9]+[0-9]*).*' --output-group 1)
+set -l esp_part_num (echo "$esp_device" | string match -r '^/dev/(?:[^0-9]+[0-9]*)([^pP]*[0-9]+)$' --output-group 1)
+
+if test -z "$esp_disk" -o -z "$esp_part_num"
+    echo "❌ Failed to parse disk and partition number from $esp_device."
+    return 1
+end
+
+echo "🔍 Using EFI System Partition: $esp_device (Disk: $esp_disk, Partition: $esp_part_num)"
+
+doas efibootmgr --create --disk "$esp_disk" --part "$esp_part_num" --loader '\\EFI\\BOOT\\BOOTX64.EFI' --label 'Limine' --unicode
 
     echo "✅ Boot setup complete!"
 end
