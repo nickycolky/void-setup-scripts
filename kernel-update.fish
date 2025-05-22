@@ -45,7 +45,6 @@ function kernel-update
     echo "timeout: 0
 quiet: yes
 remember_last_entry: no
-wallpaper: boot():/Void-logo3.png
 
 /Void Linux
 protocol: linux
