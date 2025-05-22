@@ -2,7 +2,7 @@ function initial-setup
     echo "🚀 Starting initial setup: Installing xtools-minimal and Git..."
     # Using 'sudo xbps-install -y' directly because 'xi' is not available yet
     # as 'xtools-minimal' is being installed here.
-    sudo xbps-install -y xtools-minimal git
+    sudo xbps-install -y xtools-minimal git curl
     if test $status -ne 0
         echo "❌ Failed to install xtools-minimal and git. Aborting initial setup."
         return 1
