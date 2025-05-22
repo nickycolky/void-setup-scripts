@@ -1,5 +1,5 @@
 function secure-boot-setup
-    echo "🔒 Starting Secure Boot setup for Void Linux with sbctl..."
+    echo "🔒 Make sure you're in Secure Boot Setup Mode. Otherwise, reboot to BIOS"
 
     echo "📦 1. Installing sbctl, sbsigntool, and efitools..."
     if xi -y sbctl sbsigntool efitools
