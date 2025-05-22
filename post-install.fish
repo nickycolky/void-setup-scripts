@@ -3,7 +3,7 @@ function post-install
     echo "------------------------------------------------"
     echo ""
 
-    # 1. Core System Configuration & Privilege Escalation (now 'xi' should be available)
+    # 1. Core System Configuration & Privilege Escalation
     echo "➡️ Running doas-setup (installing and configuring doas)..."
     doas-setup
     if test $status -ne 0
@@ -96,6 +96,6 @@ function post-install
     echo ""
 
     echo "------------------------------------------------"
-    echo "✅ All done! Remember to reboot your system."
+    echo "✅ All done! Please reboot into system BIOS to enter Setup Mode for Secure Boot."
     echo ""
 end
