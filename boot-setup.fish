@@ -28,10 +28,16 @@ function boot-setup
     doas cp BOOTX64.EFI /boot/efi/EFI/BOOT/
 
     echo "✏️ Writing /boot/efi/limine.conf..."
-    set UUID (blkid -s UUID -o value /)
+    # Get UUID
+    set root_device (findmnt -n -o SOURCE /)
+    if test -z "$root_device"
+        echo "Failed to detect root device." >&2
+        return 1
+    end
 
-    if test -z "$UUID"
-        echo "❌ Could not get UUID for root partition!"
+    set root_uuid (blkid -s UUID -o value $root_device)
+    if test -z "$root_uuid"
+        echo "Failed to detect UUID of root device ($root_device)." >&2
         return 1
     end
 
@@ -43,7 +49,7 @@ remember_last_entry: no
 /Void Linux
 protocol: linux
 kernel_path: boot():/vmlinuz-\$kernel_ver
-kernel_cmdline: root=UUID=\$UUID rw loglevel=0 console=tty2
+kernel_cmdline: root=UUID=\$root_uuid rw loglevel=0 console=tty2
 module_path: boot():/initramfs-\$kernel_ver.img
 EOF
 " > /dev/null
