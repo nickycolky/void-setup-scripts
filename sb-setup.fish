@@ -1,6 +1,12 @@
 function secure-boot-setup
     echo "🔒 Make sure you're in Secure Boot Setup Mode. Otherwise, reboot to BIOS"
 
+    echo "🗑️ 0.1. Removing GRUB and associated packages..."
+    doas xbps-remove dracut grub grub-i386-efi grub-x86_64-efi -y
+
+    echo "🗑️ 0.2. Removing old GRUB EFI directories from /boot/EFI..."
+    doas rm -rf /boot/EFI/void_grub
+
     echo "📦 1. Installing sbctl, sbsigntool, and efitools..."
     if xi -y sbctl sbsigntool efitools
         echo "✅ Packages installed successfully."
