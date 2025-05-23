@@ -8,12 +8,7 @@ function sb-setup
     doas rm -rf /boot/EFI/void_grub
 
     echo "📦 1. Installing sbctl, sbsigntool, and efitools..."
-    if xi -y sbctl sbsigntool efitools
-        echo "✅ Packages installed successfully."
-    else
-        echo "❌ Failed to install required packages. Aborting setup."
-        return 1
-    end
+    doas xbps-install sbctl sbsigntool efitools -y
 
     echo "🔑 2. Creating Secure Boot keys..."
     if doas sbctl create-keys

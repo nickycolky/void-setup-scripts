@@ -25,22 +25,6 @@ function boot-setup
     # Install Limine bootloader using xi package manager
     xi -Sy limine
 
-    echo "🗑 Cleaning Limine directory except BOOTX64.EFI..."
-    set -l limine_dir "/usr/share/limine"
-    if not test -d "$limine_dir"
-        echo "❌ Limine directory $limine_dir not found! Please ensure Limine is installed."
-        return 1
-    end
-    cd "$limine_dir"
-    # Remove all files except BOOTX64.EFI using a standard find command
-    find . -maxdepth 1 -type f ! -name "BOOTX64.EFI" -exec doas rm {} +
-
-    # Ensure BOOTX64.EFI exists in the Limine share directory after cleaning
-    if not test -f "BOOTX64.EFI"
-        echo "❌ BOOTX64.EFI not found in $limine_dir after cleaning. Limine installation may be incomplete."
-        return 1
-    end
-
     # Create the necessary EFI boot directory structure on the ESP
     doas mkdir -p /boot/efi/EFI/BOOT
     # Copy the Limine EFI executable to the standard boot path on the ESP
