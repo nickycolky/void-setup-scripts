@@ -88,6 +88,7 @@ function post-install
     echo ""
 
     echo "➡️ Running fastfetch-setup (configuring fastfetch for terminal display)..."
+    sv-enable tlp
     fastfetch-setup
     if test $status -ne 0
         echo "❌ fastfetch-setup failed. Aborting further setup."
