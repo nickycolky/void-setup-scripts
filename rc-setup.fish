@@ -25,39 +25,56 @@ function rc-setup
         end
     end
 
-    if test -z "$backlight_device"
+    # --- Setup rc.local (always includes rfkill) ---
+    echo "📝 Setting up /etc/rc.local..."
+    set -l rc_local_lines \
+        '#!/bin/sh'
+
+    if test -n "$backlight_device"
+        set rc_local_lines $rc_local_lines \
+            'number=$(cat /etc/end)' \
+            "echo \"\$number\" > /sys/class/backlight/$backlight_device/brightness"
+    else
         echo "❌ No backlight device found under /sys/class/backlight/ with a 'brightness' file."
-        echo "Brightness persistence may not work."
-        set backlight_device "unknown_backlight"
+        echo "Brightness persistence will be skipped."
     end
 
-    echo "📝 Setting up /etc/rc.local..."
-
-    set -l rc_local_lines \
-        '#!/bin/sh' \
-        'number=$(cat /etc/end)' \
-        "echo \"\$number\" > /sys/class/backlight/$backlight_device/brightness" \
+    set rc_local_lines $rc_local_lines \
         'rfkill block bluetooth'
 
     printf "%s\n" $rc_local_lines | doas tee /etc/rc.local > /dev/null
     doas chmod +x /etc/rc.local
     echo "✅ /etc/rc.local setup complete."
 
-    echo "📝 Setting up /etc/rc.shutdown..."
 
-    set -l rc_shutdown_lines \
-        '#!/bin/sh' \
-        "cat /sys/class/backlight/$backlight_device/brightness > /etc/end"
+    # --- Conditional setup for rc.shutdown and /etc/end ---
+    if test -n "$backlight_device"
+        echo "📝 Setting up /etc/rc.shutdown..."
+        set -l rc_shutdown_lines \
+            '#!/bin/sh' \
+            "cat /sys/class/backlight/$backlight_device/brightness > /etc/end"
 
-    printf "%s\n" $rc_shutdown_lines | doas tee /etc/rc.shutdown > /dev/null
-    doas chmod +x /etc/rc.shutdown
-    echo "✅ /etc/rc.shutdown setup complete."
+        printf "%s\n" $rc_shutdown_lines | doas tee /etc/rc.shutdown > /dev/null
+        doas chmod +x /etc/rc.shutdown # Corrected line
+        echo "✅ /etc/rc.shutdown setup complete."
 
-    echo "📝 Creating /etc/end for brightness persistence..."
-    if not test -f /etc/end
-        echo "0" | doas tee /etc/end > /dev/null
-        echo "✅ /etc/end created and initialized to 0."
+        echo "📝 Creating /etc/end for brightness persistence..."
+        if not test -f /etc/end
+            echo "0" | doas tee /etc/end > /dev/null
+            echo "✅ /etc/end created and initialized to 0."
+        else
+            echo "✅ /etc/end already exists."
+        end
     else
-        echo "✅ /etc/end already exists."
+        echo "ℹ️ Skipping /etc/rc.shutdown and /etc/end creation as no backlight device was found."
+        # Ensure these files are not present or are cleaned up if they exist from a previous run
+        if test -f /etc/rc.shutdown
+            doas rm /etc/rc.shutdown
+            echo "🗑️ Removed existing /etc/rc.shutdown."
+        end
+        if test -f /etc/end
+            doas rm /etc/end
+            echo "🗑️ Removed existing /etc/end."
+        end
     end
 end
