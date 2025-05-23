@@ -1,6 +1,6 @@
 function pipewire-setup
     echo "📦 Installing PipeWire, WirePlumber, and SOF firmware..."
-    xi -Sy pipewire wireplumber sof-firmware
+    xi -y pipewire wireplumber sof-firmware
     if test $status -ne 0
         echo "❌ Failed to install PipeWire packages. Aborting PipeWire setup."
         return 1

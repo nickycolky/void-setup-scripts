@@ -1,5 +1,5 @@
 function fastfetch-setup
-    xi -Sy fastfetch
+    xi -y fastfetch
     echo "📂 Creating fastfetch config directory..."
     mkdir -p ~/.config/fastfetch/
 

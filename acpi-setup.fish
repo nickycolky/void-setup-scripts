@@ -1,6 +1,6 @@
 function acpi-setup
     echo "⬇️ Installing gnome-screensaver..."
-    doas xi -y gnome-screensaver # Assuming 'xi' is an alias for xbps-install
+    doas xi -y gnome-screensaver
 
     echo "🛠️ Setting up /etc/acpi/handler.sh..."
     doas sh -c "cat > '/etc/acpi/handler.sh' <<'EOF'

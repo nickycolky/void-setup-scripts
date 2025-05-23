@@ -1,5 +1,5 @@
 function doas-setup
-    xi -Sy opendoas
+    xi -y opendoas
     echo "📝 Writing /etc/doas.conf..."
 
     echo 'permit setenv {PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin} :wheel

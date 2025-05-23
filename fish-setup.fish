@@ -1,7 +1,6 @@
 function fish-setup
     echo "📦 Installing Starship..."
-    # 'xi' uses doas, so this implicitly uses doas.
-    xi -Sy starship
+    xi -S starship
 
     echo "📝 Creating ~/.config/starship.toml..."
     mkdir -p ~/.config # Ensure the config directory exists

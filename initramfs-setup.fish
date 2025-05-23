@@ -1,6 +1,6 @@
 function initramfs-setup
     echo "📦 Installing mkinitcpio..."
-    xi -Sy mkinitcpio
+    xi -y mkinitcpio
 
     echo "🔄 Reconfiguring initramfs for the latest mainline kernel..."
 
