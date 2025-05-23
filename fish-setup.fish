@@ -1,6 +1,6 @@
 function fish-setup
     echo "📦 Installing Starship..."
-    xi -S starship
+    xi -y starship
 
     echo "📝 Creating ~/.config/starship.toml..."
     mkdir -p ~/.config # Ensure the config directory exists
