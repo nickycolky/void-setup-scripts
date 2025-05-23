@@ -1,4 +1,4 @@
-function secure-boot-setup
+function sb-setup
     echo "🔒 Make sure you're in Secure Boot Setup Mode. Otherwise, reboot to BIOS"
 
     echo "🗑️ 0.1. Removing GRUB and associated packages..."
