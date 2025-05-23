@@ -28,7 +28,7 @@ function boot-setup
     # Create the necessary EFI boot directory structure on the ESP
     doas mkdir -p /boot/efi/EFI/BOOT
     # Copy the Limine EFI executable to the standard boot path on the ESP
-    doas cp BOOTX64.EFI /boot/efi/EFI/BOOT/
+    doas cp /usr/share/limine/BOOTX64.EFI /boot/efi/EFI/BOOT/
 
     # Verify the loader file exists in the target location on the ESP
     set -l final_loader_path "/boot/efi/EFI/BOOT/BOOTX64.EFI"

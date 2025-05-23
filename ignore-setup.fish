@@ -5,7 +5,6 @@ function ignore-setup
     doas mkdir -p /etc/xbps.d
 
     # Write the content to the 10-ignore.conf file
-    # Using doas sh -c "cat > file <<'EOF' ... EOF" for root-owned file creation
     doas sh -c "cat > '/etc/xbps.d/10-ignore.conf' <<'EOF'
 ignorepkg=font-util
 ignorepkg=hicolor-icon-theme
