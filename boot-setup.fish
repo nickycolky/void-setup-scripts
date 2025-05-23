@@ -23,7 +23,8 @@ function boot-setup
 
     echo "📦 Installing Limine..."
     # Install Limine bootloader using xi package manager
-    xi -Sy limine
+    doas xbps-install -Sy limine
+    doas find "/usr/share/limine" -maxdepth 1 -type f ! -name "BOOTX64.EFI" -exec rm {} +
 
     # Create the necessary EFI boot directory structure on the ESP
     doas mkdir -p /boot/efi/EFI/BOOT
