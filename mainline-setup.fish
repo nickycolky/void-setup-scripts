@@ -1,6 +1,6 @@
 function mainline-setup
     echo "📦 Installing latest mainline kernel..."
-    xi -S linux-mainline
+    xi -Sy linux-mainline
 
     echo "🗑 Cleaning up older kernel files in /boot..."
 
@@ -37,7 +37,7 @@ function mainline-setup
     end
 
     echo "🗑 Running 'del linux'..."
-    del linux
+    del linux -y
 
     echo "✅ Mainline kernel setup complete!"
 end
