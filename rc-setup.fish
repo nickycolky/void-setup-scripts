@@ -25,7 +25,9 @@ function rc-setup
         end
     end
 
-    # --- Setup rc.local (always includes rfkill) ---
+    ---
+    ## Setting up `/etc/rc.local`
+    ---
     echo "📝 Setting up /etc/rc.local..."
     set -l rc_local_lines \
         '#!/bin/sh'
@@ -46,8 +48,9 @@ function rc-setup
     doas chmod +x /etc/rc.local
     echo "✅ /etc/rc.local setup complete."
 
-
-    # --- Conditional setup for rc.shutdown and /etc/end ---
+    ---
+    ## Conditional Setup for Brightness Persistence
+    ---
     if test -n "$backlight_device"
         echo "📝 Setting up /etc/rc.shutdown..."
         set -l rc_shutdown_lines \
@@ -55,7 +58,7 @@ function rc-setup
             "cat /sys/class/backlight/$backlight_device/brightness > /etc/end"
 
         printf "%s\n" $rc_shutdown_lines | doas tee /etc/rc.shutdown > /dev/null
-        doas chmod +x /etc/rc.shutdown # Corrected line
+        doas chmod +x /etc/rc.shutdown
         echo "✅ /etc/rc.shutdown setup complete."
 
         echo "📝 Creating /etc/end for brightness persistence..."
@@ -67,14 +70,5 @@ function rc-setup
         end
     else
         echo "ℹ️ Skipping /etc/rc.shutdown and /etc/end creation as no backlight device was found."
-        # Ensure these files are not present or are cleaned up if they exist from a previous run
-        if test -f /etc/rc.shutdown
-            doas rm /etc/rc.shutdown
-            echo "🗑️ Removed existing /etc/rc.shutdown."
-        end
-        if test -f /etc/end
-            doas rm /etc/end
-            echo "🗑️ Removed existing /etc/end."
-        end
     end
 end
