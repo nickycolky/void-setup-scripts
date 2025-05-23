@@ -88,7 +88,7 @@ function post-install
     echo ""
 
     echo "➡️ Running fastfetch-setup (configuring fastfetch for terminal display)..."
-    sv-enable tlp
+    sv-enable tlp bluetoothd
     fastfetch-setup
     if test $status -ne 0
         echo "❌ fastfetch-setup failed. Aborting further setup."
