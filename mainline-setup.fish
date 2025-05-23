@@ -1,6 +1,6 @@
 function mainline-setup
     echo "📦 Installing latest mainline kernel..."
-    xi -y linux-mainline
+    xi -yU linux-mainline
 
     echo "🗑 Cleaning up older kernel files in /boot..."
 
