@@ -95,7 +95,13 @@ function post-install
     end
     echo ""
 
-    echo "------------------------------------------------"
-    echo "✅ All done! Please reboot into system BIOS to enter Setup Mode for Secure Boot."
-    echo ""
+    echo "💡 Post-install setup is complete. Please reboot into BIOS to continue setting up Secure Boot."
+    read -P "Do you want to reboot now? (y/N) " confirm_reboot
+
+    if test (echo "$confirm_reboot" | tr '[:upper:]' '[:lower:]') = "y"
+        echo "Rebooting now..."
+        loginctl reboot --firmware-setup
+    else
+        echo "Reboot cancelled."
+    end
 end
