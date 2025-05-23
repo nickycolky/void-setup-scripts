@@ -9,6 +9,7 @@ function sb-setup
 
     echo "📦 1. Installing sbctl, sbsigntool, and efitools..."
     doas xbps-install sbctl sbsigntool efitools -y
+    cc
 
     echo "🔑 2. Creating Secure Boot keys..."
     if doas sbctl create-keys
