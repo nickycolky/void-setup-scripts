@@ -88,8 +88,6 @@ function post-install
     echo ""
 
     echo "➡️ Running fastfetch-setup (configuring fastfetch for terminal display)..."
-    sv-enable tlp bluetoothd zramen
-    sv-disable agetty-tty6 agetty-tty5 agetty-tty4 sshd 
     fastfetch-setup
     if test $status -ne 0
         echo "❌ fastfetch-setup failed. Aborting further setup."

@@ -73,6 +73,8 @@ function sb-setup
 
     printf "%s\n" $sbsigntool_hook_lines | doas tee /etc/default/sbsigntool-kernel-hook > /dev/null
     echo "✅ /etc/default/sbsigntool-kernel-hook updated."
+    sv-disable wpa_supplicant dhcpcd agetty-tty4 agetty-tty5 agetty-tty6 sshd
+    sv-enable NetworkManager tlp bluetoothd zramen
 
     echo ""
     echo "💡 Secure Boot setup is complete. A reboot is required for changes to take full effect."
