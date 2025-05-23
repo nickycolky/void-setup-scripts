@@ -6,7 +6,7 @@ function flatpak-setup
     doas flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
     echo "📥 Installing PinApp from Flathub..."
-    flatpak install flathub io.github.fabrialberio.pinapp -y
+    flatpak install io.github.fabrialberio.pinapp com.spotify.Client com.mattjakeman.ExtensionManager -y
 
     echo "✅ Flatpak setup complete."
 end
