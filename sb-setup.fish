@@ -2,7 +2,7 @@ function sb-setup
     echo "🔒 Make sure you're in Secure Boot Setup Mode. Otherwise, reboot to BIOS"
 
     echo "🗑️ 0.1. Removing GRUB and associated packages..."
-    doas xbps-remove dracut grub grub-i386-efi grub-x86_64-efi dbus-x11 xorg-server xorg-server-common -y
+    doas xbps-remove dracut grub grub-i386-efi grub-x86_64-efi dbus-x11 xorg-server xorg-server-common sudo -y
 
     echo "🗑️ 0.2. Removing old GRUB EFI directories from /boot/EFI..."
     doas rm -rf /boot/EFI/void_grub
