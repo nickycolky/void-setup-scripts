@@ -3,7 +3,7 @@ function limine-update
     set current_dir (pwd)
 
         cd /usr/share/limine
-        rmexcept BOOTX64.EFI
+        rmexcept -y BOOTX64.EFI
 
         doas find /boot/EFI/BOOT -type f -delete
 
