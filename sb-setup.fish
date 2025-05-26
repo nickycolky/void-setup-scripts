@@ -75,6 +75,11 @@ function sb-setup
     echo "✅ /etc/default/sbsigntool-kernel-hook updated."
     sv-disable wpa_supplicant dhcpcd agetty-tty4 agetty-tty5 agetty-tty6 sshd
     sv-enable NetworkManager tlp bluetoothd zramen
+    doas hblock
+    gsettings set org.gnome.Epiphany content-filters "[
+                          'https://gitlab.com/eyeo/filterlists/contentblockerlists/-/raw/master/easylist+easyprivacy-minified.json',
+                          'https://gitlab.com/eyeo/filterlists/contentblockerlists/-/raw/master/fanboy-annoyance-minified.json'
+                        ]"
 
     echo ""
     echo "💡 Secure Boot setup is complete. A reboot is required for changes to take full effect."

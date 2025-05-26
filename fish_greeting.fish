@@ -1,6 +1,5 @@
 function fish_greeting
-    echo "                                                                                  ";
+    sleep 0.01
     fastfetch
-    echo "                                                                                  ";
-    echo "                                                                                  ";
+    echo "                                                                         ";
 end
