@@ -24,5 +24,5 @@ function update
         echo "⚡ Updating hblock..."
         doas hblock
     end
-    echo "🎉 Update completed! Your system is good to go!"
+    echo "🎉 Update complete! Your system is good to go!"
 end
