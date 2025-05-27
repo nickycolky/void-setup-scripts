@@ -1,25 +1,20 @@
 function update
-    echo "✨ Starting system updates..."
-
-    if xi -Suy
+    set xbps_full_output (doas xbps-install -Suy 2>&1)
+    if string match -q "*Size to download:*" "$xbps_full_output"
+        echo "$xbps_full_output"
         echo "🧹 Clearing xbps cache..."
         doas xbps-remove -O
     else
-        echo "✅ Everything is up to date."
+        echo "✅ Void packages are up to date."
     end
 
-    echo "📦 Updating Flatpak apps..."
-
-    # Capture Flatpak update output
-    set flatpak_update_output (flatpak update 2>&1)
+    set flatpak_update_output (flatpak update -y 2>&1)
     if not string match -q "*Nothing to do.*" "$flatpak_update_output"
         echo "$flatpak_update_output"
-    end
-
-    # Capture Flatpak remove output
-    set flatpak_remove_output (flatpak remove --unused 2>&1)
-    if not string match -q "*Nothing unused to uninstall*" "$flatpak_remove_output"
-        echo "$flatpak_remove_output" # Print output only if items were removed
+        echo "🧹 Removing unused Flatpak runtimes..." 
+        flatpak remove --unused -y
+    else
+        echo "✅ Flatpaks are up to date."
     end
 
     read -P "🛡️ Do you want to update hblock list? (y/N) " -n 1 response
